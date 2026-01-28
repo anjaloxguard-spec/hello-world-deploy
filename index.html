@@ -1,14 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My First Deployed Site</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Square!</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background: #f4f4f4; }
-        h1 { color: #333; }
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background: #222; color: white; overflow: hidden; margin: 0; }
+        #game-container { position: relative; width: 100vw; height: 80vh; background: #333; border-bottom: 5px solid #444; cursor: crosshair; }
+        #target { 
+            position: absolute; width: 50px; height: 50px; background: #00ff88; 
+            border-radius: 8px; cursor: pointer; transition: 0.1s;
+            box-shadow: 0 0 15px #00ff88;
+        }
+        .stats { padding: 20px; font-size: 24px; }
+        #score { color: #00ff88; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>I just deployed this to the internet.</p>
+
+    <div class="stats">Score: <span id="score">0</span></div>
+    
+    <div id="game-container">
+        <div id="target"></div>
+    </div>
+
+    <p>Click the green square as fast as you can!</p>
+
+    <script>
+        let score = 0;
+        const target = document.getElementById('target');
+        const scoreDisplay = document.getElementById('score');
+        const container = document.getElementById('game-container');
+
+        function moveTarget() {
+            // Calculate random position within the container
+            const maxX = container.clientWidth - target.clientWidth;
+            const maxY = container.clientHeight - target.clientHeight;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            target.style.left = randomX + 'px';
+            target.style.top = randomY + 'px';
+        }
+
+        target.addEventListener('click', () => {
+            score++;
+            scoreDisplay.innerText = score;
+            moveTarget();
+        });
+
+        // Initialize first position
+        moveTarget();
+    </script>
 </body>
 </html>
